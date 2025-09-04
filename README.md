@@ -92,9 +92,11 @@ npm install
 
 Create a `.env` file in the root directory:
 
-```ini
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
+```ini 
+DB_HOST=127.0.0.1
+DB_USER=root
+DB_PASSWORD=12345
+DB_NAME=xyz
 ```
 
 ### 🖥️ Running the Project
