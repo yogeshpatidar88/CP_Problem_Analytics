@@ -12,8 +12,6 @@
 
 ## 🚀 Features
 
-![WhatsApp Image 2025-09-05 at 02 20 02_41c7c7df](https://github.com/user-attachments/assets/386ecd84-cac3-459b-868c-56b7d640432a)
-
 ![WhatsApp Image 2025-09-05 at 02 20 02_566248f8](https://github.com/user-attachments/assets/87c2d843-2bbe-4c08-b4f3-14b229ff2532)
 ![WhatsApp Image 2025-09-05 at 02 20 02_7bdbf933](https://github.com/user-attachments/assets/abe98aee-1ee0-4328-abb4-ed0e1db768ec)
 ![WhatsApp Image 2025-09-05 at 02 20 02_17c037a8](https://github.com/user-attachments/assets/76b2b768-907d-4e14-bfe5-6109addcb79d)
@@ -111,6 +109,7 @@ npm start
 ```
 
 Visit the app at [http://localhost:3000](http://localhost:3000)
+![WhatsApp Image 2025-09-05 at 02 20 02_41c7c7df](https://github.com/user-attachments/assets/386ecd84-cac3-459b-868c-56b7d640432a)
 
 ## 🔮 Future Enhancements
 
