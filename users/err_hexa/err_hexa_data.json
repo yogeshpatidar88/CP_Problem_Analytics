@@ -1,0 +1,18 @@
+{
+    "username": "err_hexa",
+    "problem_count": 5,
+    "average_rating": 1760.0,
+    "highest_rating": 1900,
+    "first_attempt_percentage": 100.0,
+    "problem_tags_count": {
+        "dp": 3,
+        "binary search": 2,
+        "brute force": 2,
+        "data structures": 2,
+        "math": 2,
+        "greedy": 1,
+        "implementation": 1,
+        "number theory": 1,
+        "strings": 1
+    }
+}

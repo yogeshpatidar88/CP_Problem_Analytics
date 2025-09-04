@@ -1,0 +1,197 @@
+/* Ensure root elements allow scrolling */
+html, body {
+    height: 100%; /* Allow content to expand fully */
+    margin: 0;
+    padding: 0;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Full page container for Problem Analysis */
+  .problem-analysis-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it grows to fit content */
+    width: 100%;
+    background-color: #151a21;
+    color: #e0e0e0;
+    overflow-y: auto; /* Allow vertical scrolling */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Header Section */
+  .problem-analysis-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #82e9de;
+    margin-bottom: 20px;
+  }
+  
+  /* Problem Input Section */
+  .problem-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .problem-input label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+  }
+  
+  .problem-input input {
+    padding: 10px;
+    border: 1px solid #82e9de;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 300px;
+    margin-bottom: 10px;
+    background-color: #1f2530;
+    color: #e0e0e0;
+  }
+  
+  .problem-input button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #82e9de;
+    color: #151a21;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .problem-input button:hover {
+    background-color: #63c4bd;
+  }
+  
+  /* Chart Section */
+  .chart-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .chart-card {
+    flex: 1 1 calc(50% - 20px);
+    background-color: #1f2530;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .chart-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #82e9de;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .chart-card {
+      flex: 1 1 100%;
+    }
+  }
+  /* Chart Section */
+  .chart-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .chart-card {
+    flex: 0 1 48%; /* Ensure charts take roughly half the width of the parent container */
+    background-color: #1f2530;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px; /* Limit the max width for better appearance */
+  }
+  
+  .chart-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #82e9de;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .chart-card {
+      flex: 1 1 100%; /* Stack charts vertically on smaller screens */
+      max-width: 100%;
+    }
+  }
+  .problem-info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .info-card {
+    flex: 1 1 calc(30% - 20px); /* Adjusts width for responsiveness */
+    background-color: #1f2530;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .info-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #82e9de;
+  }
+  
+  .info-card input,
+  .info-card textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #e0e0e0;
+    background-color: #151a21;
+    border: 1px solid #82e9de;
+    border-radius: 5px;
+    resize: none; /* Prevent resizing for the text area */
+    text-align: center; /* Center-align text for inputs */
+  }
+  
+  .info-card textarea {
+    height: 100px; /* Fixed height for multiline errors */
+  }
+  /* Back to Homepage Button */
+  .back-button {
+    position: fixed;
+    top: 20px; /* Position at the top */
+    left: 20px; /* Position to the left */
+    z-index: 999;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    visibility: visible; /* Ensure it's visible on login */
+  }
+  
+  .back-button:hover {
+    background-color: #45a049;
+  }
+  
+  
+  

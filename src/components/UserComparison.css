@@ -1,0 +1,158 @@
+/* UserComparison.css */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.user-comparison-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #151a21;
+  color: #e0e0e0;
+  padding: 20px 10px; /* Reduced left/right padding */
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #82e9de; /* Old color for headings */
+  margin-bottom: 20px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Reduced gap between elements */
+  margin: 10px auto; /* Center the container */
+  max-width: 400px; /* Limit container width */
+}
+
+.input-container label {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #e0e0e0; /* Light gray color for text */
+}
+
+.input-container input {
+  width: 100%; /* Full width inside container */
+  padding: 8px; /* Reduced padding */
+  border: 1px solid #82e9de; /* Old color for borders */
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  background-color: #1f2530; /* Dark background for input */
+  color: #e0e0e0; /* Light gray color for text */
+}
+
+.input-container button {
+  width: 100%; /* Full width inside container */
+  padding: 8px 10px; /* Adjusted padding for compact design */
+  font-size: 1rem;
+  background-color: #82e9de; /* Old color for button background */
+  color: #151a21; /* Dark color for button text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background-color: #63c4bd; /* Lighter shade for button hover */
+}
+
+.comparison-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the charts and content */
+  justify-content: center;
+  gap: 20px; /* Moderate gap between sections */
+  padding: 0 10px; /* Reduced horizontal padding */
+}
+
+.comparison-result {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Reduced gap between cards */
+  margin-top: 20px; /* Reduced top margin */
+}
+
+.user-data {
+  background-color: #1f2530; /* Dark background for user data sections */
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.user-data h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #82e9de; /* Old color for subheadings */
+}
+
+.user-data p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.charts {
+  display: flex;
+  gap: 20px; /* Reduced gap between charts */
+  margin-top: 20px; /* Reduced top margin */
+  flex-wrap: wrap;
+  justify-content: center; /* Center-align the charts */
+  margin-bottom: 20px; /* Space between charts and other sections */
+}
+
+.chart-card {
+  width: calc(33.333% - 15px); /* Reduced width for better fit */
+  background-color: #1f2530; /* Dark background for chart cards */
+  border-radius: 8px;
+  padding: 15px; /* Reduced padding inside cards */
+  margin: 5px 0; /* Add vertical spacing between rows */
+}
+
+.chart-card h4 {
+  color: #82e9de; /* Old color for chart titles */
+  margin-bottom: 10px; /* Reduced margin */
+  text-align: center;
+}
+
+/* Back Button Styling */
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10; /* Ensure it's on top */
+}
+
+.back-button-home {
+  margin-top: 30px; /* Space below inputs */
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button-home:hover {
+  background-color: #d32f2f;
+}
+
+/* Small adjustments to reduce excessive spaces and align content better */
+h1, .charts, .comparison-results {
+  margin: 0 auto;
+  max-width: 1200px; /* Center and limit maximum width */
+}
+

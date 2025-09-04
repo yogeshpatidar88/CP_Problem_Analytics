@@ -1,0 +1,24 @@
+{
+    "username": "vedantjain29",
+    "problem_count": 7,
+    "average_rating": 1100.0,
+    "highest_rating": 2000,
+    "first_attempt_percentage": 71.42857142857143,
+    "problem_tags_count": {
+        "greedy": 5,
+        "constructive algorithms": 3,
+        "dp": 3,
+        "math": 3,
+        "binary search": 2,
+        "brute force": 2,
+        "data structures": 2,
+        "implementation": 2,
+        "two pointers": 2,
+        "dfs and similar": 1,
+        "dsu": 1,
+        "graphs": 1,
+        "number theory": 1,
+        "sortings": 1,
+        "ternary search": 1
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "Penchick and Desert Rabbit": {
+        "submission_id": 291647565,
+        "problem_id": "2031_D",
+        "username": "aru123",
+        "verdict": "WRONG_ANSWER",
+        "execution_time": 687,
+        "memory_used": "0 KB",
+        "language_used": "C++17 (GCC 7-32)",
+        "diff_rating": 800,
+        "contest_name": "Codeforces Round 987 (Div. 2)"
+    },
+    "Penchick and BBQ Buns": {
+        "submission_id": 291616020,
+        "problem_id": "2031_C",
+        "username": "aru123",
+        "verdict": "WRONG_ANSWER",
+        "execution_time": 93,
+        "memory_used": "0 KB",
+        "language_used": "C++17 (GCC 7-32)",
+        "diff_rating": 800,
+        "contest_name": "Codeforces Round 987 (Div. 2)"
+    },
+    "Penchick and Satay Sticks": {
+        "submission_id": 291591963,
+        "problem_id": "2031_B",
+        "username": "aru123",
+        "verdict": "Accepted",
+        "execution_time": 296,
+        "memory_used": "0 KB",
+        "language_used": "C++17 (GCC 7-32)",
+        "diff_rating": 800,
+        "contest_name": "Codeforces Round 987 (Div. 2)"
+    }
+}

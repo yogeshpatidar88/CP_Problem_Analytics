@@ -1,0 +1,41 @@
+{
+    "problem_id": "2031_C",
+    "problem_difficulty_rating": {
+        "actual_rating": 800
+    },
+    "problem_acceptance_rate": {
+        "acceptance_rate": 50.0
+    },
+    "common_errors_on_problem": {
+        "common_errors": [
+            {
+                "verdict": "WRONG_ANSWER",
+                "error_count": 1
+            },
+            {
+                "verdict": "Accepted",
+                "error_count": 1
+            }
+        ]
+    },
+    "difficulty_perception": {
+        "difficulty_perception": {
+            "average_user_rating": 1684.0,
+            "successful_submission_count": 1
+        }
+    },
+    "user_interaction_with_problem": {
+        "unique_user_interactions": 1
+    },
+    "submissions_by_user_rating_title": {
+        "submissions_by_rating_title": [
+            {
+                "rating_title": "expert",
+                "user_count": 1
+            }
+        ]
+    },
+    "average_submissions_to_solve": {
+        "average_submissions_to_solve": 2.0
+    }
+}

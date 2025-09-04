@@ -1,0 +1,24 @@
+{
+    "Remainders Game": {
+        "submission_id": 256235304,
+        "problem_id": "687_B",
+        "username": "tanishqgodha",
+        "verdict": "WRONG_ANSWER",
+        "execution_time": 46,
+        "memory_used": "100 KB",
+        "language_used": "C++17 (GCC 7-32)",
+        "diff_rating": 1800,
+        "contest_name": "Codeforces Round 360 (Div. 1)"
+    },
+    "Long Inversions": {
+        "submission_id": 256218459,
+        "problem_id": "1955_E",
+        "username": "tanishqgodha",
+        "verdict": "Accepted",
+        "execution_time": 327,
+        "memory_used": "0 KB",
+        "language_used": "C++17 (GCC 7-32)",
+        "diff_rating": 1700,
+        "contest_name": "Codeforces Round 938 (Div. 3)"
+    }
+}

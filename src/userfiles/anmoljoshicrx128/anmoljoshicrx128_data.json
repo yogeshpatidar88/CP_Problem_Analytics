@@ -1,0 +1,20 @@
+{
+    "username": "anmoljoshicrx128",
+    "problem_count": 3,
+    "average_rating": 1700.0,
+    "highest_rating": 1900,
+    "first_attempt_percentage": 100.0,
+    "problem_tags_count": {
+        "math": 3,
+        "brute force": 2,
+        "data structures": 2,
+        "binary search": 1,
+        "dfs and similar": 1,
+        "dp": 1,
+        "dsu": 1,
+        "graphs": 1,
+        "greedy": 1,
+        "implementation": 1,
+        "number theory": 1
+    }
+}

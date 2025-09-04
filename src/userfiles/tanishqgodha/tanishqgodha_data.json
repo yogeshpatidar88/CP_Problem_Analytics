@@ -1,0 +1,16 @@
+{
+    "username": "tanishqgodha",
+    "problem_count": 2,
+    "average_rating": 1750.0,
+    "highest_rating": 1800,
+    "first_attempt_percentage": 50.0,
+    "problem_tags_count": {
+        "brute force": 1,
+        "chinese remainder theorem": 1,
+        "greedy": 1,
+        "implementation": 1,
+        "math": 1,
+        "number theory": 1,
+        "sortings": 1
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "Fault-tolerant Network": {
+        "submission_id": 291780213,
+        "problem_id": "1651_C",
+        "username": "anmoljoshicrx128",
+        "verdict": "WRONG_ANSWER",
+        "execution_time": 62,
+        "memory_used": "76000 KB",
+        "language_used": "C++23 (GCC 14-64, msys2)",
+        "diff_rating": 1500,
+        "contest_name": "Educational Codeforces Round 124 (Rated for Div. 2)"
+    },
+    "Kosuke's Sloth": {
+        "submission_id": 289192466,
+        "problem_id": "2033_F",
+        "username": "anmoljoshicrx128",
+        "verdict": "Accepted",
+        "execution_time": 140,
+        "memory_used": "80200 KB",
+        "language_used": "C++23 (GCC 14-64, msys2)",
+        "diff_rating": 1800,
+        "contest_name": "Codeforces Round 981 (Div. 3)"
+    },
+    "Sakurako, Kosuke, and the Permutation": {
+        "submission_id": 289181282,
+        "problem_id": "2033_E",
+        "username": "anmoljoshicrx128",
+        "verdict": "Accepted",
+        "execution_time": 452,
+        "memory_used": "134100 KB",
+        "language_used": "C++23 (GCC 14-64, msys2)",
+        "diff_rating": 1400,
+        "contest_name": "Codeforces Round 981 (Div. 3)"
+    },
+    "Sums of Segments": {
+        "submission_id": 289169912,
+        "problem_id": "2026_D",
+        "username": "anmoljoshicrx128",
+        "verdict": "Accepted",
+        "execution_time": 734,
+        "memory_used": "92500 KB",
+        "language_used": "C++23 (GCC 14-64, msys2)",
+        "diff_rating": 1900,
+        "contest_name": "Educational Codeforces Round 171 (Rated for Div. 2)"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "problem_id": "1651_C",
+    "problem_acceptance_rate": {
+        "acceptance_rate": 0.0
+    },
+    "common_errors_on_problem": {
+        "common_errors": [
+            {
+                "verdict": "WRONG_ANSWER",
+                "error_count": 2
+            }
+        ]
+    },
+    "difficulty_perception": {
+        "difficulty_perception": [
+            {
+                "difficulty_rating": 1500,
+                "submission_count": 2
+            }
+        ]
+    },
+    "user_interaction_with_problem": {
+        "unique_user_interactions": 1
+    }
+}

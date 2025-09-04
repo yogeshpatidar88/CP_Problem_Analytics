@@ -1,0 +1,22 @@
+{
+    "username": "tanishqgodha",
+    "problem_count": 6,
+    "average_rating": 1683.3333333333333,
+    "highest_rating": 1800,
+    "first_attempt_percentage": 83.33333333333334,
+    "problem_tags_count": {
+        "greedy": 4,
+        "math": 3,
+        "binary search": 2,
+        "brute force": 2,
+        "data structures": 2,
+        "sortings": 2,
+        "two pointers": 2,
+        "chinese remainder theorem": 1,
+        "constructive algorithms": 1,
+        "dp": 1,
+        "geometry": 1,
+        "implementation": 1,
+        "number theory": 1
+    }
+}
