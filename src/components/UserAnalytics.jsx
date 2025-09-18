@@ -13,6 +13,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import './UserAnalytics.css';
+import ChartModal from './ChartModal';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement);
 
@@ -107,16 +108,112 @@ function UserAnalytics({ handle, onLogout }) {
 };
 
 
-  // Graph Data Definitions
+  // Graph Data Definitions with improved styling
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: '#e0e6ed',
+          font: {
+            size: 14,
+            family: 'Inter, sans-serif'
+          }
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(30, 36, 50, 0.95)',
+        titleColor: '#82e9de',
+        bodyColor: '#e0e6ed',
+        borderColor: '#82e9de',
+        borderWidth: 1,
+        cornerRadius: 8,
+        titleFont: {
+          size: 14,
+          family: 'Inter, sans-serif'
+        },
+        bodyFont: {
+          size: 12,
+          family: 'Inter, sans-serif'
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#a8b2d1',
+          font: {
+            size: 12,
+            family: 'Inter, sans-serif'
+          }
+        },
+        grid: {
+          color: 'rgba(130, 233, 222, 0.1)',
+          borderColor: 'rgba(130, 233, 222, 0.3)'
+        }
+      },
+      y: {
+        ticks: {
+          color: '#a8b2d1',
+          font: {
+            size: 12,
+            family: 'Inter, sans-serif'
+          }
+        },
+        grid: {
+          color: 'rgba(130, 233, 222, 0.1)',
+          borderColor: 'rgba(130, 233, 222, 0.3)'
+        }
+      }
+    }
+  };
+
+  const pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#e0e6ed',
+          font: {
+            size: 13,
+            family: 'Inter, sans-serif'
+          },
+          padding: 20,
+          usePointStyle: true,
+          pointStyle: 'circle'
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(30, 36, 50, 0.95)',
+        titleColor: '#82e9de',
+        bodyColor: '#e0e6ed',
+        borderColor: '#82e9de',
+        borderWidth: 1,
+        cornerRadius: 8
+      }
+    }
+  };
+
   const ratingChartData = {
     labels: ratingHistory.map(entry => new Date(entry.contest_date).toLocaleDateString()),
     datasets: [
       {
         label: 'Rating Over Time',
         data: ratingHistory.map(entry => entry.final_rating),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(130, 233, 222, 0.1)',
         borderColor: '#82e9de',
-        tension: 0.1,
+        borderWidth: 3,
+        pointBackgroundColor: '#82e9de',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        tension: 0.4,
+        shadow: true
       },
     ],
   };
@@ -127,13 +224,19 @@ function UserAnalytics({ handle, onLogout }) {
       {
         label: 'Average Rating Over Time',
         data: ratingHistory.map(entry => entry.final_rating - 100),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(255, 152, 0, 0.1)',
         borderColor: '#ff9800',
-        tension: 0.1,
+        borderWidth: 3,
+        pointBackgroundColor: '#ff9800',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        tension: 0.4,
       },
     ],
   };
-
 
   const problemTagsBarChartData = {
     labels: Object.keys(problemTagData || {}),
@@ -141,7 +244,29 @@ function UserAnalytics({ handle, onLogout }) {
       {
         label: 'Problems Solved by Tags',
         data: Object.values(problemTagData || {}),
-        backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#2196f3', '#9c27b0', '#3f51b5'],
+        backgroundColor: [
+          'rgba(130, 233, 222, 0.8)',
+          'rgba(255, 107, 157, 0.8)',
+          'rgba(254, 202, 87, 0.8)',
+          'rgba(72, 219, 251, 0.8)',
+          'rgba(156, 39, 176, 0.8)',
+          'rgba(63, 81, 181, 0.8)',
+          'rgba(76, 175, 80, 0.8)',
+          'rgba(244, 67, 54, 0.8)'
+        ],
+        borderColor: [
+          '#82e9de',
+          '#ff6b9d',
+          '#feca57',
+          '#48dbfb',
+          '#9c27b0',
+          '#3f51b5',
+          '#4caf50',
+          '#f44336'
+        ],
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false
       },
     ],
   };
@@ -152,7 +277,11 @@ function UserAnalytics({ handle, onLogout }) {
       {
         label: 'Problems Solved by Rating',
         data: Object.values(difficultyData || {}),
-        backgroundColor: '#3f51b5',
+        backgroundColor: 'rgba(63, 81, 181, 0.8)',
+        borderColor: '#3f51b5',
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false
       },
     ],
   };
@@ -165,9 +294,16 @@ function UserAnalytics({ handle, onLogout }) {
       {
         label: 'Contest Rank',
         data: contestData.map(contest => contest.contest_rank),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(244, 67, 54, 0.1)',
         borderColor: '#f44336',
-        tension: 0.1,
+        borderWidth: 3,
+        pointBackgroundColor: '#f44336',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        tension: 0.4,
       },
     ],
   };
@@ -180,9 +316,16 @@ function UserAnalytics({ handle, onLogout }) {
         data: contestData.map((contest, index) =>
           contestData.slice(0, index + 1).reduce((acc, val) => acc + val.rating_change, 0)
         ),
-        fill: false,
+        fill: true,
+        backgroundColor: 'rgba(103, 58, 183, 0.1)',
         borderColor: '#673ab7',
-        tension: 0.1,
+        borderWidth: 3,
+        pointBackgroundColor: '#673ab7',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        tension: 0.4,
       },
     ],
   };
@@ -193,7 +336,11 @@ function UserAnalytics({ handle, onLogout }) {
       {
         label: 'Monthly Problems Solved',
         data: monthlyProblemCount.map(entry => entry.problem_count),
-        backgroundColor: '#03a9f4',
+        backgroundColor: 'rgba(3, 169, 244, 0.8)',
+        borderColor: '#03a9f4',
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false
       },
     ],
   };
@@ -203,7 +350,29 @@ function UserAnalytics({ handle, onLogout }) {
     datasets: [
       {
         data: Object.values(problemTagData || {}),
-        backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#2196f3', '#9c27b0', '#3f51b5'],
+        backgroundColor: [
+          'rgba(130, 233, 222, 0.8)',
+          'rgba(255, 107, 157, 0.8)',
+          'rgba(254, 202, 87, 0.8)',
+          'rgba(72, 219, 251, 0.8)',
+          'rgba(156, 39, 176, 0.8)',
+          'rgba(63, 81, 181, 0.8)',
+          'rgba(76, 175, 80, 0.8)',
+          'rgba(244, 67, 54, 0.8)'
+        ],
+        borderColor: [
+          '#82e9de',
+          '#ff6b9d',
+          '#feca57',
+          '#48dbfb',
+          '#9c27b0',
+          '#3f51b5',
+          '#4caf50',
+          '#f44336'
+        ],
+        borderWidth: 3,
+        hoverBorderWidth: 4,
+        hoverOffset: 10
       },
     ],
   };
@@ -274,22 +443,22 @@ function UserAnalytics({ handle, onLogout }) {
             <div className="chart-row">
               <div className="panel">
                 <h4>Rating History</h4>
-                <Line data={ratingChartData} />
+                <Line data={ratingChartData} options={chartOptions} height={300} />
               </div>
               <div className="panel">
                 <h4>Average Rating Over Time</h4>
-                <Line data={averageRatingChartData} />
+                <Line data={averageRatingChartData} options={chartOptions} height={300} />
               </div>
             </div>
 
             <div className="chart-row">
               <div className="panel">
                 <h4>Problems Solved by Tags</h4>
-                <Bar data={problemTagsBarChartData} />
+                <Bar data={problemTagsBarChartData} options={chartOptions} height={300} />
               </div>
               <div className="panel">
                 <h4>Problems Solved by Rating</h4>
-                <Bar data={problemSolvedByRatingChartData} />
+                <Bar data={problemSolvedByRatingChartData} options={chartOptions} height={300} />
               </div>
             </div>
           </>
@@ -311,11 +480,11 @@ function UserAnalytics({ handle, onLogout }) {
             </div>
             <div className="panel">
               <h4>Contest Rank History</h4>
-              <Line data={contestRankChartData} />
+              <Line data={contestRankChartData} options={chartOptions} height={300} />
             </div>
             <div className="panel">
               <h4>Cumulative Rating Changes</h4>
-              <Line data={cumulativeRatingChangesChartData} />
+              <Line data={cumulativeRatingChangesChartData} options={chartOptions} height={300} />
             </div>
           </div>
         )}
@@ -343,15 +512,17 @@ function UserAnalytics({ handle, onLogout }) {
             <div className="chart-cards">
               <div className="chart-card">
                 <h4>Monthly Problem Solving Trend</h4>
-                <Bar data={monthlyProblemTrendChartData} />
+                <Bar data={monthlyProblemTrendChartData} options={chartOptions} height={400} />
               </div>
               <div className="chart-card">
                 <h4>Problem Tags Distribution</h4>
-                <Pie data={problemTagsPieChartData} />
+                <Pie data={problemTagsPieChartData} options={pieOptions} height={400} />
               </div>
               <div className="chart-card">
+                
+
                 <h4>Problems Solved by Rating</h4>
-                <Bar data={problemSolvedByRatingChartData} />
+                <Bar data={problemSolvedByRatingChartData} options={chartOptions} height={400} />
               </div>
             </div>
           </div>

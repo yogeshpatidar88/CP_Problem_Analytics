@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 
-function HomePage({ onLoginClick, onUserAnalyticsClick, onRegisterClick, onProblemAnalysisClick, onUserComparisonClick }) {
+function HomePage({ onLoginClick, onUserAnalyticsClick, onRegisterClick, onProblemAnalysisClick, onUserComparisonClick, onCodeEditorClick }) {
   const [showIntro, setShowIntro] = useState(true);
 
   // Create stars on component mount
@@ -88,6 +88,10 @@ function HomePage({ onLoginClick, onUserAnalyticsClick, onRegisterClick, onProbl
               <div className="feature-card" onClick={onUserComparisonClick}>
                 <h2>User Comparison</h2>
                 <p>Compare your performance with another user's on Codeforces.</p>
+              </div>
+              <div className="feature-card" onClick={onCodeEditorClick}>
+                <h2>Code Editor</h2>
+                <p>Practice coding problems with our built-in editor supporting C++ and Python.</p>
               </div>
             </div>
           </div>
