@@ -214,7 +214,7 @@ SELECT t.tag_name, COUNT(DISTINCT s.problem_id) AS problem_count
         JOIN problems p ON s.problem_id = p.problem_id
         JOIN problem_tags pt ON p.problem_id = pt.problem_id
         JOIN tags t ON pt.tag_id = t.tag_id
-        WHERE s.username = 'err_hexa' AND s.verdict = 'Accepted'
+        WHERE s.username = 'pjn69' AND s.verdict = 'Accepted'
         GROUP BY t.tag_name
         ORDER BY problem_count DESC
 
@@ -233,7 +233,7 @@ SELECT
 FROM 
     user_contests
 WHERE 
-    username = 'err_hexa';
+    username = 'pjn69';
 
 
 SELECT p.problem_id, p.diff_rating, pt.tag_id
@@ -242,12 +242,12 @@ JOIN problem_tags pt ON p.problem_id = pt.problem_id
 WHERE p.problem_id IN (
     SELECT problem_id
     FROM submissions
-    WHERE username = 'err_hexa' AND verdict = 'Accepted'
+    WHERE username = 'pjn69' AND verdict = 'Accepted'
 )
 ORDER BY (
     SELECT submission_time 
     FROM submissions 
-    WHERE username = 'err_hexa' AND problem_id = p.problem_id 
+    WHERE username = 'pjn69' AND problem_id = p.problem_id 
     LIMIT 1
 ) DESC
 LIMIT 10;
@@ -265,12 +265,12 @@ SELECT
     problem_count, 
     max_rating 
 FROM users 
-WHERE username = 'aru123';
+WHERE username = 'pjn69';
 
 
 SELECT s.submission_id, s.problem_id, s.username, s.verdict, s.execution_time, 
            s.memory_used, s.language_used
     FROM submissions s
-    WHERE s.username = 'aru123'
+    WHERE s.username = 'pjn69'
     ORDER BY s.submission_time DESC
     LIMIT 10;

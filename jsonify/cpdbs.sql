@@ -164,13 +164,4 @@ select * from tags;
 
 select * from problem_tags;
 
-SELECT 
-    username, 
-    email, 
-    rating, 
-    country, 
-    university, 
-    problem_count, 
-    max_rating 
-FROM users 
-WHERE username = 'aru123';
+

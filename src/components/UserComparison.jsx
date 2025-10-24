@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -15,9 +15,10 @@ import './UserComparison.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend);
 
-const UserComparison = ({ onBackToHome }) => {
-  const [user1Handle, setUser1Handle] = useState('');
-  const [user2Handle, setUser2Handle] = useState('');
+const UserComparison = ({ onBackToHome, onShowResults }) => {
+  const [users, setUsers] = useState([]);
+  const [user1, setUser1] = useState('');
+  const [user2, setUser2] = useState('');
   const [loading, setLoading] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
   const [error, setError] = useState(null);
@@ -28,57 +29,109 @@ const UserComparison = ({ onBackToHome }) => {
   const [ratingHistory2, setRatingHistory2] = useState([]);
   const [contestData1, setContestData1] = useState([]);
   const [contestData2, setContestData2] = useState([]);
+  const [compareJson, setCompareJson] = useState(null);
 
-  const handleCompareUsers = () => {
-    if (user1Handle && user2Handle) {
-      setLoading(true);
-      setDataFetched(false);
-      setError(null);
+  useEffect(() => {
+    fetch('http://localhost:5000/api/users')
+      .then(response => response.json())
+      .then(data => {
+        // ensure we store an array; if API returns an object with message, default to []
+        if (Array.isArray(data)) setUsers(data);
+        else if (data && Array.isArray(data.userFolders)) setUsers(data.userFolders);
+        else setUsers([]);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        setUsers([]);
+      });
+  }, []);
 
-      Promise.all([
-        import(`../../users/${user1Handle}/${user1Handle}_data.json`),
-        import(`../../users/${user2Handle}/${user2Handle}_data.json`),
-        import(`../../users/${user1Handle}/${user1Handle}_user_rating_history.json`),
-        import(`../../users/${user2Handle}/${user2Handle}_user_rating_history.json`),
-        import(`../../users/${user1Handle}/${user1Handle}_contest_cards.json`),
-        import(`../../users/${user2Handle}/${user2Handle}_contest_cards.json`),
-      ])
-        .then(([userData1, userData2, ratingHistory1, ratingHistory2, contestData1, contestData2]) => {
-          setUserData1(userData1.default);
-          setUserData2(userData2.default);
-          setRatingHistory1(ratingHistory1.default);
-          setRatingHistory2(ratingHistory2.default);
-          setContestData1(contestData1.default);
-          setContestData2(contestData2.default);
-          setDataFetched(true);
-        })
-        .catch((err) => {
-          setError('Error fetching data');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+  const handleUser1Change = (event) => {
+    const selectedUser = event.target.value;
+    setUser1(selectedUser);
+    // Clear previously loaded data for this user until Compare is clicked
+    setUserData1({});
+    setRatingHistory1([]);
+    setContestData1([]);
+  };
+
+  const handleUser2Change = (event) => {
+    const selectedUser = event.target.value;
+    setUser2(selectedUser);
+    // Clear previously loaded data for this user until Compare is clicked
+    setUserData2({});
+    setRatingHistory2([]);
+    setContestData2([]);
+  };
+
+  // No local/static user data lookup anymore — we'll fetch from the backend when Compare is clicked.
+
+  const handleCompareUsers = async () => {
+    if (!user1 || !user2) {
+      setError('Please enter two user handles to compare.');
+      return;
     }
+    setLoading(true);
+    setError(null);
+    setCompareJson(null);
+    try {
+  // Call backend explicitly on port 5000 so the dev-server proxy (or missing proxy) doesn't block the request
+  const res = await fetch(`http://localhost:5000/api/compare/${encodeURIComponent(user1)}/${encodeURIComponent(user2)}`);
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Compare request failed');
+      }
+      const data = await res.json();
+      setCompareJson(data);
+      setDataFetched(true);
+    } catch (err) {
+      console.error('Compare fetch error', err);
+      setError(err.message || 'Failed to fetch comparison data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Return HTML string with basic JSON syntax highlighting
+  const syntaxHighlight = (obj) => {
+    if (!obj) return '';
+    const json = JSON.stringify(obj, null, 2);
+    const escaped = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return escaped.replace(/(\"(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\\"])*\"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
+      let cls = 'json-number';
+      if (/^\"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'json-key';
+        } else {
+          cls = 'json-string';
+        }
+      } else if (/true|false/.test(match)) {
+        cls = 'json-boolean';
+      } else if (/null/.test(match)) {
+        cls = 'json-null';
+      }
+      return `<span class=\"${cls}\">${match}</span>`;
+    });
   };
 
   const handleBackToForm = () => {
     setDataFetched(false);
-    setUser1Handle('');
-    setUser2Handle('');
+    setUser1('');
+    setUser2('');
   };
 
   const ratingComparisonData = {
     labels: ratingHistory1.map(entry => new Date(entry.contest_date).toLocaleDateString()),
     datasets: [
       {
-        label: `${user1Handle} Rating`,
+        label: `${user1} Rating`,
         data: ratingHistory1.map(entry => entry.final_rating),
         fill: false,
         borderColor: '#82e9de',
         tension: 0.1,
       },
       {
-        label: `${user2Handle} Rating`,
+        label: `${user2} Rating`,
         data: ratingHistory2.map(entry => entry.final_rating),
         fill: false,
         borderColor: '#ff9800',
@@ -92,7 +145,7 @@ const UserComparison = ({ onBackToHome }) => {
     labels: [...new Set([...ratingHistory1.map(entry => entry.contest_date.split('-')[1]), ...ratingHistory2.map(entry => entry.contest_date.split('-')[1])])],
     datasets: [
       {
-        label: `${user1Handle} Monthly Trend`,
+        label: `${user1} Monthly Trend`,
         data: ratingHistory1.reduce((acc, entry) => {
           const month = entry.contest_date.split('-')[1];
           acc[month] = (acc[month] || 0) + 1;
@@ -101,7 +154,7 @@ const UserComparison = ({ onBackToHome }) => {
         backgroundColor: '#82e9de',
       },
       {
-        label: `${user2Handle} Monthly Trend`,
+        label: `${user2} Monthly Trend`,
         data: ratingHistory2.reduce((acc, entry) => {
           const month = entry.contest_date.split('-')[1];
           acc[month] = (acc[month] || 0) + 1;
@@ -116,14 +169,14 @@ const UserComparison = ({ onBackToHome }) => {
     labels: contestData1.map(contest => contest.contest_name),
     datasets: [
       {
-        label: `${user1Handle} Cumulative Rating Changes`,
+        label: `${user1} Cumulative Rating Changes`,
         data: contestData1.map((contest, index) => contestData1.slice(0, index + 1).reduce((acc, val) => acc + val.rating_change, 0)),
         fill: false,
         borderColor: '#82e9de',
         tension: 0.1,
       },
       {
-        label: `${user2Handle} Cumulative Rating Changes`,
+        label: `${user2} Cumulative Rating Changes`,
         data: contestData2.map((contest, index) => contestData2.slice(0, index + 1).reduce((acc, val) => acc + val.rating_change, 0)),
         fill: false,
         borderColor: '#ff9800',
@@ -136,12 +189,12 @@ const UserComparison = ({ onBackToHome }) => {
     labels: ['Problems Solved'],
     datasets: [
       {
-        label: `${user1Handle} Problems Solved`,
+        label: `${user1} Problems Solved`,
         data: [userData1.problem_count],
         backgroundColor: '#82e9de',
       },
       {
-        label: `${user2Handle} Problems Solved`,
+        label: `${user2} Problems Solved`,
         data: [userData2.problem_count],
         backgroundColor: '#ff9800',
       },
@@ -152,14 +205,14 @@ const UserComparison = ({ onBackToHome }) => {
     labels: contestData1.map(contest => contest.contest_name),
     datasets: [
       {
-        label: `${user1Handle} Rank`,
+        label: `${user1} Rank`,
         data: contestData1.map(contest => contest.contest_rank),
         fill: false,
         borderColor: '#82e9de',
         tension: 0.1,
       },
       {
-        label: `${user2Handle} Rank`,
+        label: `${user2} Rank`,
         data: contestData2.map(contest => contest.contest_rank),
         fill: false,
         borderColor: '#ff9800',
@@ -172,12 +225,12 @@ const UserComparison = ({ onBackToHome }) => {
     labels: ['Highest Rank', 'Lowest Rank'],
     datasets: [
       {
-        label: `${user1Handle}`,
+        label: `${user1}`,
         data: [Math.min(...contestData1.map(contest => contest.contest_rank)), Math.max(...contestData1.map(contest => contest.contest_rank))],
         backgroundColor: '#82e9de',
       },
       {
-        label: `${user2Handle}`,
+        label: `${user2}`,
         data: [Math.min(...contestData2.map(contest => contest.contest_rank)), Math.max(...contestData2.map(contest => contest.contest_rank))],
         backgroundColor: '#ff9800',
       },
@@ -185,7 +238,7 @@ const UserComparison = ({ onBackToHome }) => {
   };
 
   const currentRatingComparisonData = {
-    labels: [user1Handle, user2Handle],
+    labels: [user1, user2],
     datasets: [
       {
         label: 'Current Rating',
@@ -200,22 +253,15 @@ const UserComparison = ({ onBackToHome }) => {
       <h1>User Comparison</h1>
       {!dataFetched ? (
         <div className="input-container">
-          <label htmlFor="user1Handle">Enter first user handle:</label>
-          <input
-            id="user1Handle"
-            type="text"
-            placeholder="Enter first user handle"
-            value={user1Handle}
-            onChange={(e) => setUser1Handle(e.target.value)}
-          />
-          <label htmlFor="user2Handle">Enter second user handle:</label>
-          <input
-            id="user2Handle"
-            type="text"
-            placeholder="Enter second user handle"
-            value={user2Handle}
-            onChange={(e) => setUser2Handle(e.target.value)}
-          />
+          <label htmlFor="user1Handle">First user (type handle):</label>
+          <input list="usersList" id="user1Handle" value={user1} onChange={handleUser1Change} placeholder="e.g. tourist" />
+          <label htmlFor="user2Handle">Second user (type handle):</label>
+          <input list="usersList" id="user2Handle" value={user2} onChange={handleUser2Change} placeholder="e.g. Petr" />
+          <datalist id="usersList">
+            {users.map(u => (
+              <option key={u} value={u} />
+            ))}
+          </datalist>
           <button onClick={handleCompareUsers} disabled={loading}>
             {loading ? 'Loading...' : 'Compare Users'}
           </button>
@@ -225,42 +271,29 @@ const UserComparison = ({ onBackToHome }) => {
         </div>
       ) : (
         <div className="comparison-results">
-          {/* Back Button to Comparison Form */}
           <button className="back-button" onClick={handleBackToForm}>
             Back to Compare Users
           </button>
 
-          {/* Comparison Graphs */}
-          <div className="charts">
-            <div className="chart-card">
-              <h4>Rating History Comparison</h4>
-              <Line data={ratingComparisonData} />
+          {error && <p className="error">{error}</p>}
+
+          {compareJson ? (
+            <div className="json-output">
+              
+              <div className="json-columns">
+                <div className="json-column">
+                  <h4 style={{ textAlign: 'center', color: '#82e9de' }}>{compareJson.user1?.username || user1}</h4>
+                  <pre className="json-pre" dangerouslySetInnerHTML={{ __html: syntaxHighlight(compareJson.user1) }} />
+                </div>
+                <div className="json-column">
+                  <h4 style={{ textAlign: 'center', color: '#ff9800' }}>{compareJson.user2?.username || user2}</h4>
+                  <pre className="json-pre" dangerouslySetInnerHTML={{ __html: syntaxHighlight(compareJson.user2) }} />
+                </div>
+              </div>
             </div>
-            <div className="chart-card">
-              <h4>Monthly Problem Solving Trend</h4>
-              <Bar data={monthlyProblemTrendData} />
-            </div>
-            <div className="chart-card">
-              <h4>Cumulative Rating Changes</h4>
-              <Line data={cumulativeRatingChangesData} />
-            </div>
-            <div className="chart-card">
-              <h4>Problems Solved Comparison</h4>
-              <Bar data={problemsSolvedComparisonData} />
-            </div>
-            <div className="chart-card">
-              <h4>Rank in Contests Comparison</h4>
-              <Line data={rankInContestsComparisonData} />
-            </div>
-            <div className="chart-card">
-              <h4>Rank Comparison</h4>
-              <Bar data={rankComparisonData} />
-            </div>
-            <div className="chart-card">
-              <h4>Current Rating Comparison</h4>
-              <Bar data={currentRatingComparisonData} />
-            </div>
-          </div>
+          ) : (
+            <p>No comparison JSON available.</p>
+          )}
         </div>
       )}
     </div>
