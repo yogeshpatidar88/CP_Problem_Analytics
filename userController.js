@@ -511,8 +511,8 @@ function generateReasonPhrase(problem, hasUnderusedTag, successRate, userRating)
   return reasons.slice(0, 3).join(", ");
 }
 
-// Login Endpoint (unchanged)
-router.post('/login', async (req, res) => {
+// Login Endpoint (supports both /login and legacy /users/login)
+async function loginHandler(req, res) {
   const { username, password } = req.body;
   const getUserQuery = 'SELECT * FROM users WHERE username = ?';
 
@@ -538,7 +538,10 @@ router.post('/login', async (req, res) => {
     // Successful login
     res.status(200).json({ message: `Welcome back, ${username}!` });
   });
-});
+}
+
+router.post('/login', loginHandler);
+router.post('/users/login', loginHandler);
 
 // Generate Problem Analysis Endpoint
 router.post('/problems/analysis', (req, res) => {
