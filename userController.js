@@ -9,7 +9,8 @@ const db = require('./db');
 const fs = require('fs');
 
 // Simple Registration Endpoint with automatic Codeforces data fetch
-router.post('/register', async (req, res) => {
+// Extracted registration handler so we can mount it on multiple paths
+async function registerHandler(req, res) {
   console.log('Registering user...');
   const { username, email, password } = req.body;
 
@@ -106,7 +107,11 @@ router.post('/register', async (req, res) => {
     console.error(`Hashing error: ${hashError.message}`);
     return res.status(500).json({ error: 'Error processing registration. Please try again.' });
   }
-});
+}
+
+// Mount the handler on both /register and legacy /users/register for compatibility with frontend expectations
+router.post('/register', registerHandler);
+router.post('/users/register', registerHandler);
 
 // Fetch Codeforces Data Endpoint
 router.post('/fetch-codeforces-data', async (req, res) => {
@@ -181,10 +186,10 @@ router.post('/fetch-codeforces-data', async (req, res) => {
   }
 });
 
-// Get User Profile Endpoint
-router.get('/profile/:username', (req, res) => {
+// Get User Profile Endpoint (supports both /profile/:username and legacy /users/profile/:username)
+function getProfileHandler(req, res) {
   const { username } = req.params;
-  
+
   const getUserQuery = `
     SELECT username, email, rating, country, university, problem_count, max_rating, rating_title, last_updated
     FROM users 
@@ -207,10 +212,14 @@ router.get('/profile/:username', (req, res) => {
     
     res.status(200).json({ user });
   });
-});
+}
+
+router.get('/profile/:username', getProfileHandler);
+router.get('/users/profile/:username', getProfileHandler);
 
 // Get User Analytics Data Endpoint
-router.get('/analytics/:username', async (req, res) => {
+// Get User Analytics Data Endpoint (supports both /analytics/:username and legacy /users/analytics/:username)
+async function getAnalyticsHandler(req, res) {
   const { username } = req.params;
   
   try {
@@ -290,10 +299,14 @@ router.get('/analytics/:username', async (req, res) => {
     console.error(`Error fetching analytics: ${error.message}`);
     return res.status(500).json({ error: 'Failed to fetch analytics data.' });
   }
-});
+}
+
+router.get('/analytics/:username', getAnalyticsHandler);
+router.get('/users/analytics/:username', getAnalyticsHandler);
 
 // Get ML-based Problem Recommendations Endpoint
-router.get('/recommendations/:username', async (req, res) => {
+// Get ML-based Problem Recommendations Endpoint (supports both /recommendations/:username and legacy /users/recommendations/:username)
+async function getRecommendationsHandler(req, res) {
   try {
     const username = req.params.username;
     console.log(`Generating recommendations for user: ${username}`);
@@ -325,7 +338,10 @@ router.get('/recommendations/:username', async (req, res) => {
     console.error(`Error generating recommendations: ${error.message}`);
     return res.status(500).json({ error: 'Failed to generate recommendations.' });
   }
-});
+}
+
+router.get('/recommendations/:username', getRecommendationsHandler);
+router.get('/users/recommendations/:username', getRecommendationsHandler);
 
 // Helper function to generate ML-based recommendations
 function generateMLRecommendations(user, submissions, allProblems) {

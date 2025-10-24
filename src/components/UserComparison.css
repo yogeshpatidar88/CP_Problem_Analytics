@@ -156,3 +156,63 @@ h1, .charts, .comparison-results {
   max-width: 1200px; /* Center and limit maximum width */
 }
 
+/* JSON output styling (dark background, larger monospace font) */
+.json-output {
+  width: 100%;
+  display: flex;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
+  font-size: 1.15rem; /* slightly larger text */
+  margin-top: 20px;
+}
+
+.json-output pre {
+  background: #000; /* pure black background */
+ 
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
+  font-size: 1.05rem; /* slightly larger text */
+  line-height: 1.5;
+  padding: 18px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
+  overflow: auto;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+}
+
+.json-output h3 {
+  color: #82e9de;
+  margin-bottom: 12px;
+}
+
+/* Syntax highlight colors */
+.json-key { color: #ffcc66; }
+.json-string { color: #a8ffb0; }
+.json-number { color: #80d1ff; }
+.json-boolean { color: #ff9d9d; }
+.json-null { color: #c6c6c6; font-style: italic; }
+
+/* Two-column layout for user JSONs */
+.json-columns {
+  display: flex;
+  gap: 18px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.json-column {
+  width: 48%;
+  min-width: 260px;
+}
+
+@media (max-width: 900px) {
+  .json-columns {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .json-column {
+    width: 100%;
+  }
+}
+

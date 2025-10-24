@@ -7,12 +7,14 @@ import Register from './Register';
 import UserProfileDisplay from './components/UserProfileDisplay';
 import ProblemData from './components/ProblemData';
 import UserComparison from './components/UserComparison';
+import ComparisonResults from './components/ComparisonResults';
 import CodeEditor from './components/CodeEditor';
 
 function App() {
   const [handle, setHandle] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
+  const [comparisonParams, setComparisonParams] = useState(null);
 
   // Update user activity timestamp
   const updateActivity = () => {
@@ -157,7 +159,18 @@ function App() {
       )}
 
       {currentPage === 'userComparison' && (
-        <UserComparison onBackToHome={() => navigateTo('home')} />
+        <UserComparison onBackToHome={() => navigateTo('home')} onShowResults={(u1, u2) => {
+          setComparisonParams({ user1: u1, user2: u2 });
+          navigateTo('userComparisonResults');
+        }} />
+      )}
+
+      {currentPage === 'userComparisonResults' && comparisonParams && (
+        <ComparisonResults
+          user1={comparisonParams.user1}
+          user2={comparisonParams.user2}
+          onBack={() => navigateTo('userComparison')}
+        />
       )}
 
       {currentPage === 'codeEditor' && (
